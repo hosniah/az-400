@@ -1,0 +1,23 @@
+parameters:
+- name: myStage
+  type: string
+  default: 'Stage1'
+- name: myJob
+  type: string
+  default: 'Job1'
+- name: myString
+  type: string
+  default: 'default value'
+- name: mynum
+  displayName: 'My Number Param'
+  type: number
+  default: 123
+  
+stages:
+- stage: ${{ parameters.myStage }}
+  jobs: 
+  - job: 
+    steps:
+    - script: echo ${{ parameters.myString }} was entered at runtime!
+    - ${{ if not(eq(parameters.mynum, 123)) }}:
+      - script: echo You overrode the default number to ${{ parameters.mynum }}
